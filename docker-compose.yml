@@ -1,0 +1,22 @@
+version: '3.8'
+
+volumes:
+  zeebe_data:
+
+services:
+  zeebe:
+    restart: unless-stopped
+    image: ghcr.io/camunda-community-hub/zeebe-with-hazelcast-exporter:8.1.7
+    environment:
+      - ZEEBE_LOG_LEVEL=debug
+    volumes:
+      - zeebe_data:/usr/local/zeebe/data
+    ports:
+      - "26500:26500"
+      - "9600:9600"
+      - "5701:5701"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "localhost:9600/actuator/health" ]
+      interval: 5s
+      timeout: 2s
+      retries: 20
