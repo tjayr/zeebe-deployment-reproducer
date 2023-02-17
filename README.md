@@ -1,5 +1,18 @@
 # README
 
+## Note: This is resolved
+
+The issue is caused with the `@Deployment(resources = {"classpath*:**/*.bpmn", "classpath*:**/*.dmn"})` annotation wildcard not having a root directory.
+
+Places bpmn resources in a folder e.g. `src/main/resources/bpmn` and reference as `@Deployment(resources = {""classpath*:/bpmn/**/*.bpmn", "classpath*:/bpmn/**/*.dmn"})`
+
+References:
+
+https://forum.camunda.io/t/error-with-spring-zeebe-app-duplicated-process-id-in-resources-do-nothing-bpmn-and-do-nothing-bpmn/42703
+
+https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#resources-wildcards-in-path-other-stuff
+
+
 ## Steps to reproduce
 
 Start up a Zeebe instance. A docker compose file is provided:
